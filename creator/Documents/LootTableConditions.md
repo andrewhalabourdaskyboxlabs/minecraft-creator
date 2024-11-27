@@ -125,7 +125,7 @@ Example:
 ### match_tool
 
 `match_tool` checks whether the tool (or weapon/item the player is using) used to make the loot drop matches the modifier conditions provided.
-The predicates used are: count, durability, enchantments, and item.
+The predicates used are: count, durability, enchantments, item. `match_tool` also supports matching by item tag, which can be achieved using any combination of: `minecraft:match_tool_filter_any`, `minecraft:match_tool_filter_all`, and `minecraft:match_tool_filter_none`.
 
 >- **count:** amount of the item
 >   - range_max: the maximum value
@@ -138,7 +138,10 @@ The predicates used are: count, durability, enchantments, and item.
 >   - levels: the level of the enchantment
 >   - range_max: the maximum value
 >   - range_min: the minimum value
->- **item:** an item iID  
+>- **item:** an item iID
+>- **minecraft:match_tool_filter_any\:** list of item tags
+>- **minecraft:match_tool_filter_all\:** list of item tags
+>- **minecraft:match_tool_filter_none\:** list of item tags
 
 Example:
 
@@ -163,6 +166,26 @@ Example:
             }  
           ]  
 ```
+
+Example 2 (Item tags):
+```json
+{
+	"condition": "match_tool",
+	"minecraft:match_tool_filter_any": [
+		"minecraft:iron_tier",
+		"minecraft:golden_tier",
+		"minecraft:diamond_tier"
+	],
+	"minecraft:match_tool_filter_all": [
+		"minecraft:is_tool"
+	],
+	"minecraft:match_tool_filter_none": [
+		"minecraft:is_shovel"
+	]
+}
+```
+
+This will match any tool that is iron, golden or diamond tier, except for shovels.
 
 ### Pool conditions
 
