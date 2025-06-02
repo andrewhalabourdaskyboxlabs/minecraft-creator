@@ -301,18 +301,31 @@ If you break a chest containing a loot table that uses an inherited ID from `set
 
 ### set_banner_details
 
-This function only works on banners and currently only supports a banner `type` of `1`. 
-A banner `type` of `1` results in an illager banner.
+This function only works on banners. Determines banner type, banner color, and banner pattern. Banner type can be defined by string ("default" or "illager_captain"), or by integer (0 or 1, respectively). Only default banners can have custom patterns. Pattern count cannot exceed a maximum of 6.
 
 ```json
 {
     "type": "item",
     "name": "minecraft:banner",
-    "weight": 1,
     "functions": [
         {
             "function": "set_banner_details",
-            "type": 1
+            "type": 0,
+            "base_color": "silver",
+            "patterns": [
+                {
+                    "color": "black",
+                    "pattern": "gradient"
+                },
+                {
+                    "color": "red",
+                    "pattern": "circle"
+                },
+                {
+                    "color": "green",
+                    "pattern": "flower"
+                }
+            ]
         }
     ]
 }
@@ -515,6 +528,87 @@ This function allows you to set the name of an item. There's currently no suppor
         }
     ]
  }
+```
+
+### explosion_decay
+
+If a loot drop is triggered by an explosion, this applies a flat chance (equal to 1/explosion radius) for each dropped item to be destroyed. Items that drop in stacks are processed individually.
+
+```json
+{
+    "type": "item",
+    "name": "minecraft:dirt",
+    "functions": [
+        {
+            "function": "explosion_decay"
+        }
+    ]
+}
+```
+
+### set_stew_effect
+
+Determines the effect applied when consuming a dropped suspicious stew. Randomly selects one effect from the provided array.
+
+```json
+{
+    "type": "item",
+    "name": "minecraft:suspicious_stew",
+    "functions": [
+        {
+            "function": "minecraft:set_stew_effect",
+            "effects": [
+                {
+                    "id": 0
+                },
+                {
+                    "id": 3
+                },
+                {
+                    "id": 7
+                }
+            ]
+        }
+    ]
+}
+```
+
+### set_ominous_bottle_amplifier
+
+Sets the amplifier value of the Bad Omen effect on a dropped ominous bottle. Value is chosen randomly from the provided range.
+
+```json
+{
+    "type": "item",
+    "name": "minecraft:ominous_bottle",
+    "functions": [
+        {
+            "function": "set_ominous_bottle_amplifier",
+            "amplifier": {
+                "min": 0,
+                "max": 3
+            }
+        }
+    ]
+}
+```
+
+### set_armor_trim
+
+Determines the material and pattern of an armor trim to apply to a dropped item. Only valid for items that can have trim applied to them.
+
+```json
+{
+    "type": "item",
+    "name": "minecraft:diamond_chestplate",
+    "functions": [
+        {
+            "function": "set_armor_trim",
+            "material": "netherite",
+            "pattern": "wayfinder"
+        }
+    ]
+}
 ```
 
 ## Miscellaneous
